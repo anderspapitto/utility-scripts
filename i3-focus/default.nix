@@ -3,7 +3,7 @@
 stdenv.mkDerivation {
   name = "i3-focus";
   src = ./src;
-  buildInputs = [ (haskellPackages.ghcWithPackages (p: with p; [ aeson text cabal-install ])) ];
+  buildInputs = [ (haskellPackages.ghcWithPackages (p: with p; [ aeson text cabal-install utf8-string ])) ];
 
   configurePhase = ''
     export HOME=/tmp

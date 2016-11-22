@@ -4,14 +4,14 @@ module Main where
 
 import Control.Monad
 import Data.Aeson
-import Data.Text hiding (map)
 import System.Environment
 import System.Process
-import qualified Data.ByteString.Lazy.Char8 as BS
+import qualified Data.ByteString.UTF8 as BS
+import qualified Data.ByteString.Lazy as BSL
 
 data I3Node = I3Node
   { focused :: Bool
-  , layout  :: Text
+  , layout  :: String
   , nodes   :: [I3Node]
   } deriving (Show)
 
@@ -42,7 +42,8 @@ main :: IO ()
 main = do
   [arg] <- getArgs
   out <- readProcess "i3-msg" ["-t", "get_tree"] []
-  let Just foo = decode (BS.pack out) :: Maybe I3Node
+
+  let Just foo = decode . BSL.fromStrict . BS.fromString $ out :: Maybe I3Node
       Just (t, s) = tabAndStackDepth foo
   let n | arg == "up"   || arg == "down"  = s
         | arg == "left" || arg == "right" = t
