@@ -17,7 +17,7 @@ cabal-version:       >=1.10
 
 executable i3-focus
   main-is:             Main.hs
-  build-depends:       base >=4.9 && <4.10
+  build-depends:       base
                      , aeson
                      , bytestring
                      , process
